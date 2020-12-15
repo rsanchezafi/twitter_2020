@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import json
+import re
 import datetime
 
 from PIL import Image
@@ -23,9 +24,12 @@ data = dict((key,d[key]) for d in data for key in d)
 perfiles = []
 for key in data.keys():    
     perfiles = perfiles + [f"{key} ({data[key]['partido']})"]
-        
+perfiles.sort()
 perfil = st.selectbox('Elige un político', perfiles)
-perfil = data[key]['twitter_name']
+real_name = re.sub(' \(.*\)', '', perfil)
+perfil = data[real_name]['twitter_name']
+cargo = data[real_name]['cargo']
+
 # =============================================================================
 # Carga de datos
 # =============================================================================
@@ -33,7 +37,28 @@ with open(f'dat_20201212/{perfil}_tweets.json','rb') as f:
     data = json.load(f)
 
 # =============================================================================
+# Imagen, Nombre, Partido y bio
+# =============================================================================
+col1, col2 = st.beta_columns([1, 2])
+
+# col1.header("Foto de perfil")
+img_profile = Image.open(f'img_profile/{perfil}.jpg')
+col1.image(img_profile, use_column_width=True)
+
+col2.header(real_name)
+# Load bios profiles
+with open(r"data_bios.json", "r", encoding = 'utf-8') as read_file:
+    data_bios = json.load(read_file)
+col2.markdown(f"**{cargo}**")
+col2.markdown(data_bios[perfil])
+
+html_string = "<hr>"
+
+st.markdown(html_string, unsafe_allow_html=True)
+
+# =============================================================================
 # Número de tuits
+# TODO: filtrar offline no online
 # =============================================================================
 aux = []
 for date in data.keys():
@@ -41,13 +66,16 @@ for date in data.keys():
     if date_dt > datetime.datetime(2019, 12, 31):
         aux = aux + [date_dt]
 n_tweets = len(aux)
-st.markdown(f'{perfil} ha twitteado en 2020: {n_tweets} tweets.')
+col2.markdown(f'{real_name} ha publicado {n_tweets} tuits en 2020.')
 if n_tweets >= 3170:
-    st.markdown(f'<span style="color:red">{perfil} ha twitteado demasiado en 2020 y no tenemos todos sus tweets disponibles...</span>', unsafe_allow_html=True)
+    col2.markdown(f'<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello.</span>', unsafe_allow_html=True)
 
 # =============================================================================
 # WordCloud
 # =============================================================================
+html_string_wc = f"<h3>WordCloud de {real_name}</h3>"
+st.markdown(html_string_wc, unsafe_allow_html=True)
+
 path_wc = f'wordcloud/wordcloud_{perfil}.png'
 wc = Image.open(path_wc)
 st.image(wc, use_column_width=True) # caption='Sunrise by the mountains',
@@ -55,7 +83,8 @@ st.image(wc, use_column_width=True) # caption='Sunrise by the mountains',
 # =============================================================================
 # A quién menciona más?
 # =============================================================================
-st.markdown(f'Cuentas de Twitter más mencionados por {perfil}')
+html_string_m = f"<h3>Cuentas de Twitter más mencionados por {real_name}</h3>"
+st.markdown(html_string_m, unsafe_allow_html=True)
 
 text = []
 for tweet in data.values():
@@ -89,7 +118,8 @@ st.altair_chart(plot, use_container_width = True)
 # =============================================================================
 # Hashtags más usados
 # =============================================================================
-st.markdown(f'Hashtags más utilizados por {perfil}')
+html_string_h = f"<h3>Hashtags más utilizados por {real_name}</h3>"
+st.markdown(html_string_h, unsafe_allow_html=True)
 
 text = []
 for tweet in data.values():

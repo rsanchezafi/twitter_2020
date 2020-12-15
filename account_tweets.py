@@ -4,7 +4,7 @@ import json
 import os
 
 #Twitter API credentials
-config = json.load(open('sf_config.json', 'rb'))
+config = json.load(open('config.json', 'rb'))
 
 consumer_key = config['consumer_key']
 consumer_secret = config['consumer_secret']
@@ -22,9 +22,8 @@ for key in data.keys():
     if not os.path.isfile(path_data):
         perfiles = perfiles + [data[key]['twitter_name']]
 
-for perfil in perfiles:
-    print(perfil)
-    screen_name = perfil
+for screen_name in perfiles:
+    print(screen_name)
     #Twitter only allows access to a users most recent 3240 tweets with this method
     
     #authorize twitter, initialize tweepy
