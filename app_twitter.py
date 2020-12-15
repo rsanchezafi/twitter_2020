@@ -130,4 +130,4 @@ About1 = st.sidebar.markdown('## 🤝 Sobre nosotros')
 
 Contact = st.sidebar.markdown('## 📩 ¡Encuéntranos en LinkedIn!')
 
-Contact1 = st.sidebar.info('[Ramón Sánchez Leo](https://es.linkedin.com/in/jos%C3%A9-ram%C3%B3n-s%C3%A1nchez-leo) Data Scientist en [Afi](https://www.afi.es/).')
+Contact1 = st.sidebar.info('[Ramón Sánchez Leo](https://es.linkedin.com/in/jos%C3%A9-ram%C3%B3n-s%C3%A1nchez-leo) \n Data Scientist en [Afi](https://www.afi.es/).')
