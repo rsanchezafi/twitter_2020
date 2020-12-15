@@ -1,0 +1,211 @@
+[
+ {"Pedro Sánchez": {
+      "cargo": "Presidente del Gobierno",
+      "partido": "PSOE",
+      "twitter_name": "sanchezcastejon"}}, 
+
+ {"Salvador Illa": {
+      "cargo": "Ministro de Sanidad",
+      "partido": "PSOE",
+      "twitter_name": "salvadorilla"}}, 
+ 
+ {"Jose Luis Ábalos": {
+      "cargo": "Ministro de Transportes, Movilidad y Agenda Urbana",
+      "partido": "PSOE",
+      "twitter_name": "abalosmeco"}},
+ 
+ {"Arancha González Laya": {
+      "cargo": "Ministra de Asuntos Exteriores",
+      "partido": "PSOE",
+      "twitter_name": "AranchaGlezLaya"}},
+ 
+ {"Juan Carlos Campo Moreno": {
+      "cargo": "Ministro de Justicia",
+      "partido": "PSOE",
+      "twitter_name": "Jccampm"}}, 
+ 
+ {"Carmen Calvo": {
+      "cargo": "Vicepresidenta Primera del Gobierno",
+      "partido": "PSOE",
+      "twitter_name": "carmencalvo_"}}, 
+ 
+ {"Nadia Calviño": {
+      "cargo": "Vicepresidenta Tercera del Gobierno",
+      "partido": "Independiente",
+      "twitter_name": "NadiaCalvino"}}, 
+ 
+ {"Teresa Ribera": {
+      "cargo": "Ministra de Transición Ecológica",
+      "partido": "PSOE",
+      "twitter_name": "Teresaribera"}},
+ 
+ {"María Jesús Montero": {
+      "cargo": "Ministra de Hacienda y Portavoz del Gobierno",
+      "partido": "PSOE",
+      "twitter_name": "mjmonteroc"}}, 
+ 
+ {"Isabel Celaá": {
+      "cargo": "Ministra de Educación y Formación Profesional",
+      "partido": "PSOE",
+      "twitter_name": "CelaaIsabel"}}, 
+ 
+ {"Reyes Maroto": {
+      "cargo": "Ministra de Industria, Comercio y Turismo",
+      "partido": "PSOE",
+      "twitter_name": "MarotoReyes"}}, 
+ 
+ {"Luis Planas": {
+      "cargo": "Ministro de Agricultura, Pesca y Alimentación",
+      "partido": "PSOE",
+      "twitter_name": "LuisPlanas"}},
+ 
+ {"Carolina Darias": {
+      "cargo": "Ministra de Política Territorial y Función Pública",
+      "partido": "PSOE",
+      "twitter_name": "CarolinaDarias"}}, 
+ 
+ {"José Manuel Rodríguez Uribes": {
+      "cargo": "Ministro de Cultura y Deporte",
+      "partido": "PSOE",
+      "twitter_name": "jmrdezuribes"}}, 
+ 
+ {"Pedro Duque": {
+      "cargo": "Ministro de Ciencia e Innovación",
+      "partido": "Independiente",
+      "twitter_name": "astro_duque"}}, 
+ 
+ {"Alberto Garzón": {
+      "cargo": "Ministro de Consumo",
+      "partido": "IU",
+      "twitter_name": "agarzon"}},
+ 
+ {"José Luis Escrivá": {
+      "cargo": "Ministro de Inclusión, Seguridad Social y Migraciones",
+      "partido": "Independiente",
+      "twitter_name": "joseluisescriva"}}, 
+ 
+ {"Pablo Iglesias": {
+      "cargo": "Vicepresidente Segundo del Gobierno",
+      "partido": "Podemos",
+      "twitter_name": "PabloIglesias"}}, 
+ 
+ {"Pablo Echenique": {
+      "cargo": "Portavoz de Podemos",
+      "partido": "Podemos",
+      "twitter_name": "PabloEchenique"}}, 
+ 
+ {"Yolanda Díaz": {
+      "cargo": "Ministra de Trabajo y Economía Social",
+      "partido": "IU",
+      "twitter_name": "Yolanda_Diaz_"}}, 
+ 
+ {"Irene Montero": {
+      "cargo": "Ministra de Igualdad",
+      "partido": "Podemos",
+      "twitter_name": "IreneMontero"}},
+ 
+ {"Adriana Lastra": {
+      "cargo": "Portavoz del PSOE",
+      "partido": "PSOE",
+      "twitter_name": "Adrilastra"}}, 
+ 
+ {"Rafael Simancas": {
+      "cargo": "Secretario General del PSOE en el congreso",
+      "partido": "PSOE",
+      "twitter_name": "SimancasRafael"}},
+ 
+ {"Pablo Casado": {
+      "cargo": "Presidente del PP",
+      "partido": "PP",
+      "twitter_name": "pablocasado_"}}, 
+ 
+ {"Cayetana Álvarez de Toledo": {
+      "cargo": "Diputada del PP",
+      "partido": "PP",
+      "twitter_name": "cayetanaAT"}}, 
+ 
+ {"Cuca Gamarra": {
+      "cargo": "Portavoz del PP",
+      "partido": "PP",
+      "twitter_name": "cucagamarra"}}, 
+ 
+ {"Teodoro García Egea": {
+      "cargo": "Secretario General del PP",
+      "partido": "PP",
+      "twitter_name": "TeoGarciaEgea"}},
+ 
+ {"José Luis Martínez-Almeida": {
+      "cargo": "Alcalde de Madrid",
+      "partido": "PP",
+      "twitter_name": "AlmeidaPP_"}}, 
+ 
+ {"Isabel Díaz Ayuso": {
+      "cargo": "Presidenta de la Comunidad de Madrid",
+      "partido": "PP",
+      "twitter_name": "IdiazAyuso"}},
+ 
+ {"Juanma Moreno": {
+      "cargo": "Presidente de la Junta de Andalucía",
+      "partido": "PP",
+      "twitter_name": "JuanMa_Moreno"}}, 
+ 
+ {"Alberto Núñez Feijóo": {
+      "cargo": "Presidente de la Xunta de Galicia",
+      "partido": "PP",
+      "twitter_name": "FeijooGalicia"}},
+ 
+ {"Inés Arrimadas": {
+      "cargo": "Presidenta de Ciudadanos",
+      "partido": "Cs",
+      "twitter_name": "InesArrimadas"}},
+ 
+ {"Toni Cantó": {
+      "cargo": "Portavoz de Ciudadanos en las Cortes Valencianas",
+      "partido": "Cs",
+      "twitter_name": "Tonicanto1"}},
+ 
+ {"Íñigo Errejón": {
+      "cargo": "Diputado de Más País",
+      "partido": "Más País",
+      "twitter_name": "ierrejon"}}, 
+ 
+ {"Gabriel Rufián": {
+      "cargo": "Portavoz de ERC",
+      "partido": "ERC",
+      "twitter_name": "gabrielrufian"}},
+
+ {"Santiago Abascal": {
+      "cargo": "Presidente de VOX",
+      "partido": "VOX",
+      "twitter_name": "Santi_ABASCAL"}},
+
+ {"Javier Ortega Smith": {
+      "cargo": "Secretario general de VOX",
+      "partido": "VOX",
+      "twitter_name": "Ortega_Smith"}},
+
+ {"Macarena Olona": {
+      "cargo": "Portavoz de VOX",
+      "partido": "VOX",
+      "twitter_name": "Macarena_Olona"}},
+
+ {"Ximo Puig": {
+      "cargo": "Presidente de la Generalitat Valenciana",
+      "partido": "PSOE",
+      "twitter_name": "ximopuig"}},
+
+ {"Emiliano García-Page": {
+      "cargo": "Presidente de Castilla-La Mancha",
+      "partido": "PSOE",
+      "twitter_name": "garciapage"}},
+
+ {"Guillermo Fdez Vara": {
+      "cargo": "Presidente de la Junta de Extremadura",
+      "partido": "PSOE",
+      "twitter_name": "GFVara"}},
+
+ {"Pablo Montesinos": {
+      "cargo": "Diputado del PP",
+      "partido": "PP",
+      "twitter_name": "montesinospablo"}}
+]
