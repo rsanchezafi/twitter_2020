@@ -15,19 +15,15 @@ selection = st.sidebar.radio("Go to", ['Análisis individual', 'Comparador'])
 
 st.title('¿Cómo han estado nuestros políticos en Twitter en 2020?')
 
-perfiles = ['sanchezcastejon', 'salvadorilla', 'abalosmeco', 'AranchaGlezLaya',
-            'Jccampm', 'carmencalvo_', 'NadiaCalvino', 'Teresaribera',
-            'mjmonteroc', 'CelaaIsabel', 'MarotoReyes', 'LuisPlanas',
-            'CarolinaDarias', 'jmrdezuribes', 'astro_duque', 'agarzon',
-            'joseluisescriva', 
-            'PabloIglesias', 'PabloEchenique', 'Yolanda_Diaz_', 'IreneMontero',
-            'Adrilastra', 'SimancasRafael',
-            'pablocasado_', 'cayetanaAT', 'cucagamarra', 'TeoGarciaEgea',
-            'AlmeidaPP_', 'IdiazAyuso', 'JuanMa_Moreno', 'FeijooGalicia',
-            'InesArrimadas', 'Tonicanto1',
-            'ierrejon', 
-            'gabrielrufian']
+# Cargamos json políticos
+with open(r"data_politicos.json", "r", encoding = 'utf-8') as read_file:
+    data = json.load(read_file)
+data = dict((key,d[key]) for d in data for key in d)
 
+perfiles = []
+for key in data.keys():    
+    perfiles = perfiles + [data[key]['twitter_name']]
+        
 perfil = st.selectbox('Elige un político', perfiles)
 
 # =============================================================================
