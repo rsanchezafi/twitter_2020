@@ -11,11 +11,9 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import altair as alt
 
-import nltk
-from nltk.corpus import stopwords
-from stop_words import get_stop_words
-
-from PIL import Image
+# import nltk
+# from nltk.corpus import stopwords
+# from stop_words import get_stop_words
 
 st.sidebar.title('Selecciona una opción')
 selection = st.sidebar.radio("Go to", ['Análisis individual', 'Comparador'])
@@ -60,43 +58,8 @@ if n_tweets >= 3170:
 # WordCloud
 # =============================================================================
 path_wc = f'wordcloud/wordcloud_{perfil}.png'
-if not os.path.isfile(path_wc):
-    text = []
-    for tweet in data.values():
-        if 'full_text_RT' in tweet.keys():
-            text = text + [tweet['full_text_RT']]
-        else:
-            text = text + [tweet['full_text']]
-    text = ' '.join(text)
-    text = re.sub(r'http\S+', '', text)
-    text = re.sub('[^\w\s]', '', text)
-    text = [token for token in nltk.word_tokenize(text) if token.lower() not in stopwords.words('spanish')]
-    text = ' '.join(text)
-    text = [token for token in nltk.word_tokenize(text) if token.lower() not in get_stop_words('catalan')]
-    text = ' '.join(text)
-    text = text.replace('RT', '')
-    text = text.replace(perfil, '')
-    twitter_mask = np.array(Image.open("twitter-logo.png"))
-    wordcloud = WordCloud(
-                          #font_path='/Users/sebastian/Library/Fonts/CabinSketch-Bold.ttf',
-                          #stopwords=STOPWORDS,
-                          background_color='white',
-                          width=5800,
-                          height=3400,
-                          mask=twitter_mask,
-                          prefer_horizontal=1,
-                            contour_width=0,
-                ).generate(text)
-    
-    plt.imshow(wordcloud)
-    plt.axis("off")
-    plt.savefig(path_wc, dpi=300)
-    image = Image.open(path_wc)
-    st.image(image, use_column_width=True) # caption='Sunrise by the mountains',
-
-else:
-    image = Image.open(path_wc)
-    st.image(image, use_column_width=True) # caption='Sunrise by the mountains',
+wc = Image.open(path_wc)
+st.image(wc, use_column_width=True) # caption='Sunrise by the mountains',
     
 # =============================================================================
 # A quién menciona más?
@@ -164,3 +127,12 @@ plot = alt.layer(bars, text).configure_view(
         titleFontSize = 15)
     
 st.altair_chart(plot, use_container_width = True)
+
+
+About1 = st.sidebar.markdown('## 🤝 Sobre nosotros')
+
+# About = st.sidebar.info('Somos dos amigos graduados en matemáticas por la Universidad de Cádiz. Posteriormente obtuvimos el Máster en Data Science & Big Data en Afi Escuela de Finanzas.')
+
+Contact = st.sidebar.markdown('## 📩 ¡Encuéntranos en LinkedIn!')
+
+Contact1 = st.sidebar.info('[José Ramón Sánchez Leo](https://es.linkedin.com/in/jos%C3%A9-ram%C3%B3n-s%C3%A1nchez-leo) Data Scientist en [Afi](https://www.afi.es/).')
