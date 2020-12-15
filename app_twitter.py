@@ -20,10 +20,12 @@ with open(r"data_politicos.json", "r", encoding = 'utf-8') as read_file:
     data = json.load(read_file)
 data = dict((key,d[key]) for d in data for key in d)
 
-
+perfiles = []
+for key in data.keys():    
+    perfiles = perfiles + [f"{key} ({data[key]['partido']})"]
+        
 perfil = st.selectbox('Elige un político', list(data.keys()))
-perfil = data[perfil]['twitter_name']
-
+perfil = data[key]['twitter_name']
 # =============================================================================
 # Carga de datos
 # =============================================================================
