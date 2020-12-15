@@ -123,7 +123,6 @@ plot = alt.layer(bars, text).configure_view(
     
 st.altair_chart(plot, use_container_width = True)
 
-
 About1 = st.sidebar.markdown('## 🤝 Sobre nosotros')
 
 # About = st.sidebar.info('Somos dos amigos graduados en matemáticas por la Universidad de Cádiz. Posteriormente obtuvimos el Máster en Data Science & Big Data en Afi Escuela de Finanzas.')
@@ -131,3 +130,16 @@ About1 = st.sidebar.markdown('## 🤝 Sobre nosotros')
 Contact = st.sidebar.markdown('## 📩 ¡Encuéntranos en LinkedIn!')
 
 Contact1 = st.sidebar.info('[Ramón Sánchez Leo](https://es.linkedin.com/in/jos%C3%A9-ram%C3%B3n-s%C3%A1nchez-leo) \n Data Scientist en [Afi](https://www.afi.es/).')
+
+
+@st.cache(allow_output_mutation=True)
+def Pageviews():
+    return []
+
+pageviews=Pageviews()
+pageviews.append('dummy')
+
+try:
+    st.sidebar.markdown('Visitas a la app {}.'.format(len(pageviews)))
+except ValueError:
+    st.sidebar.markdown('Visitas a la app {}.'.format(1))
