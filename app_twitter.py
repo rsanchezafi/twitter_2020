@@ -40,9 +40,8 @@ selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 
 # Análisis individual
 # =============================================================================
 if selection == 'Análisis individual':
-    perfil = st.sidebar.selectbox('Elige un político', perfiles)
-    
     st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter en 2020</h1>", unsafe_allow_html=True)
+    perfil = st.selectbox('Elige un político', perfiles)
     
     # =============================================================================
     # Variables globales
