@@ -24,7 +24,7 @@ perfiles = []
 for key in data.keys():    
     perfiles = perfiles + [f"{key} ({data[key]['partido']})"]
         
-perfil = st.selectbox('Elige un político', list(data.keys()))
+perfil = st.selectbox('Elige un político', perfiles)
 perfil = data[key]['twitter_name']
 # =============================================================================
 # Carga de datos
