@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_echarts import st_pyecharts
 import pandas as pd
 import json
 import re
@@ -7,6 +8,10 @@ import locale
 
 from PIL import Image
 import altair as alt
+
+import random    
+import pyecharts.options as opts
+from pyecharts.charts import Calendar
 
 # =============================================================================
 # Cargamos json políticos
@@ -167,7 +172,47 @@ if selection == 'Análisis individual':
             titleFontSize = 15)
         
     st.altair_chart(plot, use_container_width = True)
+    
+    # =============================================================================
+    # Calendario publicaciones
+    # =============================================================================
+    begin = datetime.date(2020, 1, 1)
+    end = datetime.date(2020, 12, 31)
 
+    dates = []
+    for date in data.keys():
+        date = date[:10]
+        dates = dates + [date]
+    dates = pd.DataFrame(dates, columns = ['dates']).value_counts()
+    dates = pd.DataFrame(dates, columns = ['n']).reset_index()
+    data_dates = []
+    for _, row in dates.iterrows():
+        data_dates = data_dates + [(row['dates'], row['n'])]
+    
+    # data_dates = [[str(begin + datetime.timedelta(days=i)), random.randint(1000, 25000)]
+    #         for i in range((end - begin).days + 1)]
+    
+    c = (
+        Calendar(init_opts=opts.InitOpts(width="1000px", height="300px"))
+        .add(
+            series_name="",
+            yaxis_data=data_dates,
+            calendar_opts=opts.CalendarOpts(
+                pos_top="120",
+                pos_left="30",
+                pos_right="30",
+                range_="2020",
+                yearlabel_opts=opts.CalendarYearLabelOpts(is_show=False),
+            ),
+        )
+        .set_global_opts(
+            title_opts=opts.TitleOpts(pos_top="30", pos_left="center", title=f"Número de tuits por día de {real_name}"),
+            visualmap_opts=opts.VisualMapOpts(
+                max_=25, min_=0, orient="horizontal", is_piecewise=False
+            ),
+        )
+    )
+    st_pyecharts(c)
 
 # =============================================================================
 # Comparador
