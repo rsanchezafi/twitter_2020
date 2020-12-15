@@ -73,7 +73,7 @@ mentions = mentions.rename(columns = {'index': 'perfil'})
 
 # st.write(mentions)
 
-bars = alt.Chart(mentions).mark_bar().encode(
+bars = alt.Chart(mentions).mark_bar(color = '#d84510').encode(
     x='menciones:Q',
     y=alt.Y('perfil:O', sort = '-x'))
 
@@ -106,7 +106,7 @@ hashtags = hashtags.rename(columns = {'index': 'hashtags'})
 
 # st.write(hashtags)
 
-bars = alt.Chart(hashtags).mark_bar().encode(
+bars = alt.Chart(hashtags).mark_bar(color = '#d84510').encode(
     x='menciones:Q',
     y=alt.Y('hashtags:O', sort = '-x'))
 
