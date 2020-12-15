@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import re
 import datetime
+import locale
 
 from PIL import Image
 import altair as alt
@@ -11,10 +12,10 @@ import altair as alt
 # from nltk.corpus import stopwords
 # from stop_words import get_stop_words
 
-st.sidebar.title('Selecciona una opción')
-selection = st.sidebar.radio("Go to", ['Análisis individual', 'Comparador'])
+st.sidebar.title('Política española en Twitter en 2020')
+selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 'Comparador'])
 
-st.title('¿Cómo han estado nuestros políticos en Twitter en 2020?')
+st.title('Política española en Twitter en 2020')
 
 # Cargamos json políticos
 with open(r"data_politicos.json", "r", encoding = 'utf-8') as read_file:
@@ -25,7 +26,9 @@ perfiles = []
 for key in data.keys():    
     perfiles = perfiles + [f"{key} ({data[key]['partido']})"]
 perfiles.sort()
-perfil = st.selectbox('Elige un político', perfiles)
+html_string_s = f"<h3>Elige un político</h3>"
+st.markdown(html_string_s, unsafe_allow_html=True)
+perfil = st.selectbox('', perfiles)
 real_name = re.sub(' \(.*\)', '', perfil)
 perfil = data[real_name]['twitter_name']
 cargo = data[real_name]['cargo']
@@ -52,10 +55,6 @@ with open(r"data_bios.json", "r", encoding = 'utf-8') as read_file:
 col2.markdown(f"**{cargo}**")
 col2.markdown(data_bios[perfil])
 
-html_string = "<hr>"
-
-st.markdown(html_string, unsafe_allow_html=True)
-
 # =============================================================================
 # Número de tuits
 # TODO: filtrar offline no online
@@ -66,9 +65,13 @@ for date in data.keys():
     if date_dt > datetime.datetime(2019, 12, 31):
         aux = aux + [date_dt]
 n_tweets = len(aux)
-col2.markdown(f'{real_name} ha publicado {n_tweets} tuits en 2020.')
+col2.markdown(f"{real_name} ha publicado {format(n_tweets,',d').replace(',','.')} tuits en 2020.")
 if n_tweets >= 3170:
-    col2.markdown(f'<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello.</span>', unsafe_allow_html=True)
+    st.markdown(f'''<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello. Disculpa las molestias</span>''', unsafe_allow_html=True)
+
+
+html_string = "<hr>"
+st.markdown(html_string, unsafe_allow_html=True)
 
 # =============================================================================
 # WordCloud
