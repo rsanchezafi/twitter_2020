@@ -12,12 +12,12 @@ import altair as alt
 # Cargamos json políticos
 # =============================================================================
 with open(r"data_politicos.json", "r", encoding = 'utf-8') as read_file:
-    data = json.load(read_file)
-data = dict((key,d[key]) for d in data for key in d)
+    data_politicos = json.load(read_file)
+data_politicos = dict((key,d[key]) for d in data_politicos for key in d)
 
 perfiles = []
-for key in data.keys():    
-    perfiles = perfiles + [f"{key} ({data[key]['partido']})"]
+for key in data_politicos.keys():    
+    perfiles = perfiles + [f"{key} ({data_politicos[key]['partido']})"]
 perfiles.sort()
 
 # Load bios profiles
@@ -47,14 +47,24 @@ if selection == 'Análisis individual':
     # Variables globales
     # =============================================================================
     real_name = re.sub(' \(.*\)', '', perfil)
-    perfil = data[real_name]['twitter_name']
-    cargo = data[real_name]['cargo']
+    perfil = data_politicos[real_name]['twitter_name']
+    cargo = data_politicos[real_name]['cargo']
     
     # =============================================================================
     # Carga de datos
     # =============================================================================
     with open(f'dat_20201212/{perfil}_tweets.json','rb') as f:
         data = json.load(f)
+    
+    # Nos quedamos solo con la información de 2020
+    aux = []
+    for date in data.keys():
+        date_dt = datetime.datetime.strptime(date[:10], '%Y-%m-%d')
+        if not date_dt > datetime.datetime(2019, 12, 31):
+            aux = aux + [date]
+    
+    for date in aux:
+        del data[date]
     
     # =============================================================================
     # Imagen, Nombre, Partido y bio
@@ -73,12 +83,7 @@ if selection == 'Análisis individual':
     # Número de tuits
     # TODO: filtrar offline no online
     # =============================================================================
-    aux = []
-    for date in data.keys():
-        date_dt = datetime.datetime.strptime(date[:10], '%Y-%m-%d')
-        if date_dt > datetime.datetime(2019, 12, 31):
-            aux = aux + [date_dt]
-    n_tweets = len(aux)
+    n_tweets = len(data.keys())
     col2.markdown(f"{real_name} ha publicado {format(n_tweets,',d').replace(',','.')} tuits en 2020.")
     if n_tweets >= 3170:
         st.markdown(f'''<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello. Disculpa las molestias</span>''', unsafe_allow_html=True)
@@ -176,12 +181,13 @@ if selection == 'Comparador':
     # Variables globales
     # =============================================================================
     real_name_1 = re.sub(' \(.*\)', '', perfil_1)
-    perfil_1 = data[real_name_1]['twitter_name']
-    cargo_1 = data[real_name_1]['cargo']
+    perfil_1 = data_politicos[real_name_1]['twitter_name']
+    cargo_1 = data_politicos[real_name_1]['cargo']
     
     real_name_2 = re.sub(' \(.*\)', '', perfil_2)
-    perfil_2 = data[real_name_2]['twitter_name']
-    cargo_2 = data[real_name_2]['cargo']    
+    perfil_2 = data_politicos[real_name_2]['twitter_name']
+    cargo_2 = data_politicos[real_name_2]['cargo']
+    
     # =============================================================================
     # Carga de datos
     # =============================================================================
@@ -190,6 +196,17 @@ if selection == 'Comparador':
     
     with open(f'dat_20201212/{perfil_2}_tweets.json','rb') as f:
         data_2 = json.load(f)
+    
+    # Nos quedamos solo con la información de 2020
+    for data in [data_1, data_2]:
+        aux = []
+        for date in data.keys():
+            date_dt = datetime.datetime.strptime(date[:10], '%Y-%m-%d')
+            if not date_dt > datetime.datetime(2019, 12, 31):
+                aux = aux + [date]
+        
+        for date in aux:
+            del data[date]
     
     # =============================================================================
     # Imagen, Nombre, Partido y bio
