@@ -1,4 +1,3 @@
-import streamlit as st
 import pandas as pd
 import json
 import re
@@ -8,10 +7,21 @@ import locale
 from PIL import Image
 import altair as alt
 
-import random    
-import pyecharts.options as opts
-from pyecharts.charts import Calendar
+import random
+
+import streamlit as st
+from streamlit_folium import folium_static
 from streamlit_echarts import st_pyecharts
+
+import pyecharts.options as opts
+
+from pyecharts.charts import Calendar
+from pyecharts.charts import Bar, Line, Scatter, EffectScatter, Timeline
+from pyecharts import options as opts
+from pyecharts.commons.utils import JsCode
+from pyecharts.globals import ThemeType
+from pyecharts.components import Table
+from pyecharts.options import ComponentTitleOpts
 
 # =============================================================================
 # Cargamos json políticos
