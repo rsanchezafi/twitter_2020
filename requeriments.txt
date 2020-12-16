@@ -8,3 +8,6 @@ streamlit==0.70.0
 streamlit_folium==0.1.0
 streamlit_echarts==0.1.0
 urllib3==1.24.3
+wordcloud==1.8.1
+matplotlib==3.3.2
+altair==4.1.0
