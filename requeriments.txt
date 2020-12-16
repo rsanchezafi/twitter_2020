@@ -1,4 +1,4 @@
-streamlit==0.71.0
+streamlit==0.70.0
 streamlit_echarts==0.1.0
 pyecharts==1.9.0
 wordcloud==1.8.1
