@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_echarts import st_pyecharts
 import pandas as pd
 import json
 import re
@@ -12,6 +11,7 @@ import altair as alt
 import random    
 import pyecharts.options as opts
 from pyecharts.charts import Calendar
+from streamlit_echarts import st_pyecharts
 
 # =============================================================================
 # Cargamos json políticos
