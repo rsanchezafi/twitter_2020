@@ -11,7 +11,7 @@ import random
 
 import streamlit as st
 # from streamlit_folium import folium_static
-from streamlit_echarts import st_pyecharts
+#from streamlit_echarts import st_pyecharts
 
 import pyecharts.options as opts
 
