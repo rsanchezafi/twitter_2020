@@ -102,7 +102,10 @@ if selection == 'Análisis individual':
         n_tweets = len(data.keys())
         col2.markdown(f"{real_name} ha publicado {format(n_tweets,',d').replace(',','.')} tuits en 2020.")
         if n_tweets >= 3170:
-            st.markdown(f'''<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello. Disculpa las molestias</span>''', unsafe_allow_html=True)
+            st.markdown(f'''<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y 
+                        no los tenemos todos disponibles, estamos trabajando en ello. 
+                        Tenemos los tuits desde el {min(data.keys()).split(' ')[0]} a las {min(data.keys()).split(' ')[1]}.
+                        Disculpa las molestias</span>''', unsafe_allow_html=True)
         
         
         html_string = "<hr>"
