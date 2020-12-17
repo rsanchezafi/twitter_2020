@@ -88,7 +88,7 @@ for screen_name in perfiles:
                                                    'user_mentions': tweet_user_mentions
                                                    }
         except Exception as e:
-            print(f'{perfil}: {tweet.full_text}')
+            print(f'{screen_name}: {tweet.full_text}')
             print(f'ERROR: {str(e)}')
         
     #write the csv  
@@ -100,11 +100,5 @@ for screen_name in perfiles:
     # write json
     with open(f'dat_20201212/{screen_name}_tweets.json', 'w', encoding='utf-8') as f:
         json.dump(dict_aux, f, ensure_ascii=False, indent=4)
-    
-
-
-
-
-
 
 

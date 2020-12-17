@@ -56,173 +56,175 @@ selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 
 # =============================================================================
 if selection == 'Análisis individual':
     st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter durante 2020</h1>", unsafe_allow_html=True)
-    perfil = st.selectbox('Elige un político', perfiles)
+    print([''] + perfiles)
+    perfil = st.selectbox('Elige un político', [''] + perfiles)
     
-    # =============================================================================
-    # Variables globales
-    # =============================================================================
-    real_name = re.sub(' \(.*\)', '', perfil)
-    perfil = data_politicos[real_name]['twitter_name']
-    cargo = data_politicos[real_name]['cargo']
-    
-    # =============================================================================
-    # Carga de datos
-    # =============================================================================
-    with open(f'dat_20201212/{perfil}_tweets.json','rb') as f:
-        data = json.load(f)
-    
-    # Nos quedamos solo con la información de 2020
-    aux = []
-    for date in data.keys():
-        date_dt = datetime.datetime.strptime(date[:10], '%Y-%m-%d')
-        if not date_dt > datetime.datetime(2019, 12, 31):
-            aux = aux + [date]
-    
-    for date in aux:
-        del data[date]
-    
-    # =============================================================================
-    # Imagen, Nombre, Partido y bio
-    # =============================================================================
-    col1, col2 = st.beta_columns([1, 2])
-    
-    # col1.header("Foto de perfil")
-    img_profile = Image.open(f'img_profile/{perfil}.jpg')
-    col1.image(img_profile, use_column_width=True)
-    
-    col2.header(real_name)
-    col2.markdown(f"**{cargo}**")
-    col2.markdown(data_bios[perfil])
-    
-    # =============================================================================
-    # Número de tuits
-    # TODO: filtrar offline no online
-    # =============================================================================
-    n_tweets = len(data.keys())
-    col2.markdown(f"{real_name} ha publicado {format(n_tweets,',d').replace(',','.')} tuits en 2020.")
-    if n_tweets >= 3170:
-        st.markdown(f'''<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello. Disculpa las molestias</span>''', unsafe_allow_html=True)
-    
-    
-    html_string = "<hr>"
-    st.markdown(html_string, unsafe_allow_html=True)
-    
-    # =============================================================================
-    # WordCloud
-    # =============================================================================
-    st.markdown(f"<h3 style='color: #d84519;'>WordCloud de {real_name}</h3>", unsafe_allow_html=True)
-    
-    path_wc = f'wordcloud/wordcloud_{perfil}.png'
-    wc = Image.open(path_wc)
-    st.image(wc, use_column_width=True) # caption='Sunrise by the mountains',
+    if perfil != '':
+        # =============================================================================
+        # Variables globales
+        # =============================================================================
+        real_name = re.sub(' \(.*\)', '', perfil)
+        perfil = data_politicos[real_name]['twitter_name']
+        cargo = data_politicos[real_name]['cargo']
         
-    # =============================================================================
-    # A quién menciona más?
-    # =============================================================================
-    st.markdown(f"<h3 style='color: #d84519;'>Cuentas de Twitter más mencionados por {real_name}</h3>", unsafe_allow_html=True)
-    
-    text = []
-    for tweet in data.values():
-        text = text + [tweet['user_mentions']]
-    
-    flat_list = [item for sublist in text for item in sublist]  
-    flat_list = [mention for mention in flat_list if mention != perfil]
-    mentions = pd.DataFrame(flat_list, columns = ['menciones'])['menciones'].value_counts().iloc[:10]
-    mentions = mentions.reset_index()
-    mentions = mentions.rename(columns = {'index': 'perfil'})
-    
-    # st.write(mentions)
-    
-    bars = alt.Chart(mentions).mark_bar(color = '#d84510').encode(
-        x='menciones:Q',
-        y=alt.Y('perfil:O', sort = '-x'))
-    
-    text = bars.mark_text(align='left', baseline='middle',
-        dx=3  # Nudges text to right so it doesn't appear on top of the bar
-        ).encode(text='menciones:Q')
-    
-    plot = alt.layer(bars, text).configure_view(
-        stroke='transparent').configure_axis(
-            domainWidth=0.8,
-            ticks = False,
-            labelFontSize = 13,
-            titleFontSize = 15)
+        # =============================================================================
+        # Carga de datos
+        # =============================================================================
+        with open(f'dat_20201212/{perfil}_tweets.json','rb') as f:
+            data = json.load(f)
         
-    st.altair_chart(plot, use_container_width = True)
-    
-    # =============================================================================
-    # Hashtags más usados
-    # =============================================================================
-    st.markdown(f"<h3 style='color: #d84519;'>Hashtags más utilizados por {real_name}</h3>", unsafe_allow_html=True)
-    
-    text = []
-    for tweet in data.values():
-        text = text + [tweet['hashtags']]
-    
-    flat_list = [item for sublist in text for item in sublist]  
-    hashtags = pd.DataFrame(flat_list, columns = ['menciones'])['menciones'].value_counts().iloc[:10]
-    hashtags = hashtags.reset_index()
-    hashtags = hashtags.rename(columns = {'index': 'hashtags'})
-    
-    # st.write(hashtags)
-    
-    bars = alt.Chart(hashtags).mark_bar(color = '#d84510').encode(
-        x='menciones:Q',
-        y=alt.Y('hashtags:O', sort = '-x'))
-    
-    text = bars.mark_text(align = 'left', baseline = 'middle',
-        dx = 2  # Nudges text to right so it doesn't appear on top of the bar
-        ).encode(text='menciones:Q')
-    
-    plot = alt.layer(bars, text).configure_view(
-        stroke='transparent').configure_axis(
-            domainWidth=0.8,
-            ticks = False,
-            labelFontSize = 13,
-            titleFontSize = 15)
+        # Nos quedamos solo con la información de 2020
+        aux = []
+        for date in data.keys():
+            date_dt = datetime.datetime.strptime(date[:10], '%Y-%m-%d')
+            if not date_dt > datetime.datetime(2019, 12, 31):
+                aux = aux + [date]
         
-    st.altair_chart(plot, use_container_width = True)
-    
-    # =============================================================================
-    # Calendario publicaciones
-    # =============================================================================
-    begin = datetime.date(2020, 1, 1)
-    end = datetime.date(2020, 12, 31)
+        for date in aux:
+            del data[date]
+        
+        # =============================================================================
+        # Imagen, Nombre, Partido y bio
+        # =============================================================================
+        col1, col2 = st.beta_columns([1, 2])
+        
+        # col1.header("Foto de perfil")
+        img_profile = Image.open(f'img_profile/{perfil}.jpg')
+        col1.image(img_profile, use_column_width=True)
+        
+        col2.header(real_name)
+        col2.markdown(f"**{cargo}**")
+        col2.markdown(data_bios[perfil])
+        
+        # =============================================================================
+        # Número de tuits
+        # TODO: filtrar offline no online
+        # =============================================================================
+        n_tweets = len(data.keys())
+        col2.markdown(f"{real_name} ha publicado {format(n_tweets,',d').replace(',','.')} tuits en 2020.")
+        if n_tweets >= 3170:
+            st.markdown(f'''<span style="color:red">{real_name} ha publicado demasiados tuits en 2020 y no tenemos todos sus tuits disponibles, estamos trabajando en ello. Disculpa las molestias</span>''', unsafe_allow_html=True)
+        
+        
+        html_string = "<hr>"
+        st.markdown(html_string, unsafe_allow_html=True)
+        
+        # =============================================================================
+        # WordCloud
+        # =============================================================================
+        st.markdown(f"<h3 style='color: #d84519;'>WordCloud de {real_name}</h3>", unsafe_allow_html=True)
+        
+        path_wc = f'wordcloud/wordcloud_{perfil}.png'
+        wc = Image.open(path_wc)
+        st.image(wc, use_column_width=True) # caption='Sunrise by the mountains',
+            
+        # =============================================================================
+        # A quién menciona más?
+        # =============================================================================
+        st.markdown(f"<h3 style='color: #d84519;'>Cuentas de Twitter más mencionados por {real_name}</h3>", unsafe_allow_html=True)
+        
+        text = []
+        for tweet in data.values():
+            text = text + [tweet['user_mentions']]
+        
+        flat_list = [item for sublist in text for item in sublist]  
+        flat_list = [mention for mention in flat_list if mention != perfil]
+        mentions = pd.DataFrame(flat_list, columns = ['menciones'])['menciones'].value_counts().iloc[:10]
+        mentions = mentions.reset_index()
+        mentions = mentions.rename(columns = {'index': 'perfil'})
+        
+        # st.write(mentions)
+        
+        bars = alt.Chart(mentions).mark_bar(color = '#d84510').encode(
+            x='menciones:Q',
+            y=alt.Y('perfil:O', sort = '-x'))
+        
+        text = bars.mark_text(align='left', baseline='middle',
+            dx=3  # Nudges text to right so it doesn't appear on top of the bar
+            ).encode(text='menciones:Q')
+        
+        plot = alt.layer(bars, text).configure_view(
+            stroke='transparent').configure_axis(
+                domainWidth=0.8,
+                ticks = False,
+                labelFontSize = 13,
+                titleFontSize = 15)
+            
+        st.altair_chart(plot, use_container_width = True)
+        
+        # =============================================================================
+        # Hashtags más usados
+        # =============================================================================
+        st.markdown(f"<h3 style='color: #d84519;'>Hashtags más utilizados por {real_name}</h3>", unsafe_allow_html=True)
+        
+        text = []
+        for tweet in data.values():
+            text = text + [tweet['hashtags']]
+        
+        flat_list = [item for sublist in text for item in sublist]  
+        hashtags = pd.DataFrame(flat_list, columns = ['menciones'])['menciones'].value_counts().iloc[:10]
+        hashtags = hashtags.reset_index()
+        hashtags = hashtags.rename(columns = {'index': 'hashtags'})
+        
+        # st.write(hashtags)
+        
+        bars = alt.Chart(hashtags).mark_bar(color = '#d84510').encode(
+            x='menciones:Q',
+            y=alt.Y('hashtags:O', sort = '-x'))
+        
+        text = bars.mark_text(align = 'left', baseline = 'middle',
+            dx = 2  # Nudges text to right so it doesn't appear on top of the bar
+            ).encode(text='menciones:Q')
+        
+        plot = alt.layer(bars, text).configure_view(
+            stroke='transparent').configure_axis(
+                domainWidth=0.8,
+                ticks = False,
+                labelFontSize = 13,
+                titleFontSize = 15)
+            
+        st.altair_chart(plot, use_container_width = True)
+        
+        # =============================================================================
+        # Calendario publicaciones
+        # =============================================================================
+        begin = datetime.date(2020, 1, 1)
+        end = datetime.date(2020, 12, 31)
 
-    dates = []
-    for date in data.keys():
-        date = date[:10]
-        dates = dates + [date]
-    dates = pd.DataFrame(dates, columns = ['dates']).value_counts()
-    dates = pd.DataFrame(dates, columns = ['n']).reset_index()
-    data_dates = []
-    for _, row in dates.iterrows():
-        data_dates = data_dates + [(row['dates'], row['n'])]
-    
-    # data_dates = [[str(begin + datetime.timedelta(days=i)), random.randint(1000, 25000)]
-    #         for i in range((end - begin).days + 1)]
-    
-    c = (
-        Calendar(init_opts=opts.InitOpts(width="1000px", height="300px"))
-        .add(
-            series_name="",
-            yaxis_data=data_dates,
-            calendar_opts=opts.CalendarOpts(
-                pos_top="120",
-                pos_left="30",
-                pos_right="30",
-                range_="2020",
-                yearlabel_opts=opts.CalendarYearLabelOpts(is_show=False),
-            ),
+        dates = []
+        for date in data.keys():
+            date = date[:10]
+            dates = dates + [date]
+        dates = pd.DataFrame(dates, columns = ['dates']).value_counts()
+        dates = pd.DataFrame(dates, columns = ['n']).reset_index()
+        data_dates = []
+        for _, row in dates.iterrows():
+            data_dates = data_dates + [(row['dates'], row['n'])]
+        
+        # data_dates = [[str(begin + datetime.timedelta(days=i)), random.randint(1000, 25000)]
+        #         for i in range((end - begin).days + 1)]
+        
+        c = (
+            Calendar(init_opts=opts.InitOpts(width="1000px", height="300px"))
+            .add(
+                series_name="",
+                yaxis_data=data_dates,
+                calendar_opts=opts.CalendarOpts(
+                    pos_top="120",
+                    pos_left="30",
+                    pos_right="30",
+                    range_="2020",
+                    yearlabel_opts=opts.CalendarYearLabelOpts(is_show=False),
+                ),
+            )
+            .set_global_opts(
+                title_opts=opts.TitleOpts(pos_top="30", pos_left="center", title=f"Número de tuits por día de {real_name}"),
+                visualmap_opts=opts.VisualMapOpts(
+                    max_=25, min_=0, orient="horizontal", is_piecewise=False
+                ),
+            )
         )
-        .set_global_opts(
-            title_opts=opts.TitleOpts(pos_top="30", pos_left="center", title=f"Número de tuits por día de {real_name}"),
-            visualmap_opts=opts.VisualMapOpts(
-                max_=25, min_=0, orient="horizontal", is_piecewise=False
-            ),
-        )
-    )
-    st_pyecharts(c)
+        st_pyecharts(c)
 
 # =============================================================================
 # Comparador
