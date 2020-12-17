@@ -231,7 +231,7 @@ if selection == 'Análisis individual':
 # =============================================================================
 if selection == 'Comparador':
     perfil_1 = st.sidebar.selectbox('Elige un político', [''] + perfiles)
-    perfil_2 = st.sidebar.selectbox('Elige un político', [p for p in [''] + perfiles if p != perfil_1])
+    perfil_2 = st.sidebar.selectbox('Elige un político', [''] + [p for p in perfiles if p != perfil_1])
     st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter durante 2020</h1>", unsafe_allow_html=True)
     
     if (perfil_1 != '') and (perfil_2 != ''):
