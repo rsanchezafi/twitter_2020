@@ -56,7 +56,6 @@ selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 
 # =============================================================================
 if selection == 'Análisis individual':
     st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter durante 2020</h1>", unsafe_allow_html=True)
-    print([''] + perfiles)
     perfil = st.selectbox('Elige un político', [''] + perfiles)
     
     if perfil != '':
@@ -231,10 +230,12 @@ if selection == 'Análisis individual':
 # =============================================================================
 if selection == 'Comparador':
     perfil_1 = st.sidebar.selectbox('Elige un político', [''] + perfiles)
-    perfil_2 = st.sidebar.selectbox('Elige un político', [''] + [p for p in perfiles if p != perfil_1])
+    perfiles_2 = [' '] + [p for p in perfiles if p != perfil_1]
+    print(perfiles_2)
+    perfil_2 = st.sidebar.selectbox('Elige un político', perfiles_2)
     st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter durante 2020</h1>", unsafe_allow_html=True)
     
-    if (perfil_1 != '') and (perfil_2 != ''):
+    if (perfil_1 != '') and (perfil_2 != ' '):
         # =============================================================================
         # Variables globales
         # =============================================================================
