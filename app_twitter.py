@@ -31,9 +31,15 @@ with open(r"data_politicos.json", "r", encoding = 'utf-8') as read_file:
 data_politicos = dict((key,d[key]) for d in data_politicos for key in d)
 
 perfiles = []
-for key in data_politicos.keys():    
-    perfiles = perfiles + [f"{key} ({data_politicos[key]['partido']})"]
+partidos = []
+for key in data_politicos.keys():
+    partido = data_politicos[key]['partido']
+    if (partido not in partidos) and (partido != 'Independiente'):
+        partidos = partidos + [partido]
+    perfiles = perfiles + [f"{key} ({partido})"]
+    
 perfiles.sort()
+partidos.sort()
 
 # Load bios profiles
 with open(r"data_bios.json", "r", encoding = 'utf-8') as read_file:
@@ -49,7 +55,7 @@ with open(r"data_bios.json", "r", encoding = 'utf-8') as read_file:
 image = Image.open('logo.png')
 st.sidebar.image(image)
 # st.sidebar.title('Política española en Twitter en 2020')
-selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 'Comparador'])
+selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 'Partidos Políticos', 'Comparador'])
 
 # =============================================================================
 # Análisis individual
@@ -229,12 +235,34 @@ if selection == 'Análisis individual':
         #st_pyecharts(c)
 
 # =============================================================================
+# Análisis por partidos
+# =============================================================================
+if selection == 'Partidos Políticos':
+    st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter durante 2020</h1>", unsafe_allow_html=True)
+    partido = st.selectbox('Elige un partido', [''] + partidos)
+    
+    if partido != '':
+        partido_politicos = [key for key in data_politicos.keys() if data_politicos[key]['partido'] == partido]
+        st.markdown(f'''Los políticos incorporados al análisis han sido
+                    {str(partido_politicos).replace('[', '').replace(']', '').replace("'", "")}\.''')
+        
+        # =============================================================================
+        # WordCloud
+        # =============================================================================
+        st.markdown(f"<h3 style='color: #d84519;'>WordCloud de {partido}</h3>", unsafe_allow_html=True)
+        
+        path_wc = f'wordcloud/wordcloud_{partido}.png'
+        wc = Image.open(path_wc)
+        st.image(wc, use_column_width=True) # caption='Sunrise by the mountains',
+        
+        
+
+# =============================================================================
 # Comparador
 # =============================================================================
 if selection == 'Comparador':
     perfil_1 = st.sidebar.selectbox('Elige un político', [''] + perfiles)
     perfiles_2 = [' '] + [p for p in perfiles if p != perfil_1]
-    print(perfiles_2)
     perfil_2 = st.sidebar.selectbox('Elige un político', perfiles_2)
     st.markdown("<h1 style='text-align: center; color: #d84519;'>Política española en Twitter durante 2020</h1>", unsafe_allow_html=True)
     
