@@ -52,8 +52,8 @@ with open(r"data_bios.json", "r", encoding = 'utf-8') as read_file:
 # st.sidebar.markdown(html_string_s, unsafe_allow_html=True)
 
 # st.title('Política española en Twitter en 2020')
-image = Image.open('logo.png')
-st.sidebar.image(image)
+#image = Image.open('logo.png')
+#st.sidebar.image(image)
 # st.sidebar.title('Política española en Twitter en 2020')
 selection = st.sidebar.radio("Selecciona una opción", ['Análisis individual', 'Partidos Políticos', 'Comparador'])
 
